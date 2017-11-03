@@ -42,7 +42,42 @@ else
     gui_mainfcn(gui_State, varargin{:});
 end
 % End initialization code - DO NOT EDIT
+%  funciones propias-------------------------------------------------
 
+function mostrar(valor)
+
+    if(valor==1)
+%        agregar-----> funcion que muestre funcion aproximante 
+    end
+
+
+function detalle(valor)
+     if(valor==1)
+%        agregar-----> funcion que muestre fdetalle de calculo
+    end
+
+
+function visualizar(valor)
+     if(valor==1)
+%        agregar-----> funcion para visualizar distribucion de puntos
+     end
+  
+
+function aproximar(valor)
+    switch valor
+        case 1
+%             recta minimos cuad
+        case 2
+%             Parábola de MC
+        case 3
+%             Aprox. Exponencial
+        case 4
+%             Aprox. Potencial
+        case 5
+%             Aprox. Hipérbola
+    end
+
+% fin funciones
 
 % --- Executes just before Mostrar is made visible.
 function Mostrar_OpeningFcn(hObject, eventdata, handles, varargin)
@@ -61,6 +96,10 @@ guidata(hObject, handles);
 % UIWAIT makes Mostrar wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
 
+mostrar(varargin{1});
+detalle(varargin{2});
+visualizar(varargin{3});    
+aproximar(varargin{4});
 
 % --- Outputs from this function are returned to the command line.
 function varargout = Mostrar_OutputFcn(hObject, eventdata, handles) 
@@ -78,4 +117,4 @@ function volver_Callback(hObject, eventdata, handles)
 % hObject    handle to volver (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-close Mostrar;
+close Mostrar

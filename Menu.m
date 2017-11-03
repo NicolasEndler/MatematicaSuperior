@@ -22,7 +22,7 @@ function varargout = Menu(varargin)
 
 % Edit the above text to modify the response to help menumain
 
-% Last Modified by GUIDE v2.5 29-Oct-2017 17:40:27
+% Last Modified by GUIDE v2.5 02-Nov-2017 22:42:15
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -43,7 +43,11 @@ else
 end
 % End initialization code - DO NOT EDIT
 
+% Funciones propias------------------------------------------
 
+
+
+% Fin funciones propias--------------------------------------
 % --- Executes just before menumain is made visible.
 function Menu_OpeningFcn(hObject, eventdata, handles, varargin)
 % This function has no output args, see OutputFcn.
@@ -98,46 +102,47 @@ function finalizar_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 close Menu;
 
-% --- Executes on button press in checkbox6.
-function checkbox6_Callback(hObject, eventdata, handles)
-% hObject    handle to checkbox6 (see GCBO)
+% --- Executes on button press in checkMostrarFunc.
+function checkMostrarFunc_Callback(hObject, eventdata, handles)
+% hObject    handle to checkMostrarFunc (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% Hint: get(hObject,'Value') returns toggle state of checkbox6
+% Hint: get(hObject,'Value') returns toggle state of checkMostrarFunc
 
 
-% --- Executes on button press in checkbox7.
-function checkbox7_Callback(hObject, eventdata, handles)
-% hObject    handle to checkbox7 (see GCBO)
+% --- Executes on button press in checkDetalleCalc.
+function checkDetalleCalc_Callback(hObject, eventdata, handles)
+% hObject    handle to checkDetalleCalc (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% Hint: get(hObject,'Value') returns toggle state of checkbox7
+% Hint: get(hObject,'Value') returns toggle state of checkDetalleCalc
 
 
-% --- Executes on button press in checkbox8.
-function checkbox8_Callback(hObject, eventdata, handles)
-% hObject    handle to checkbox8 (see GCBO)
+% --- Executes on button press in checkVisualizar.
+function checkVisualizar_Callback(hObject, eventdata, handles)
+% hObject    handle to checkVisualizar (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% Hint: get(hObject,'Value') returns toggle state of checkbox8
+% Hint: get(hObject,'Value') returns toggle state of checkVisualizar
 
 
-% --- Executes on selection change in popupmenu1.
-function popupmenu1_Callback(hObject, eventdata, handles)
-% hObject    handle to popupmenu1 (see GCBO)
+% --- Executes on selection change in ListaAproximaciones.
+function ListaAproximaciones_Callback(hObject, eventdata, handles)
+% hObject    handle to ListaAproximaciones (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% Hints: contents = cellstr(get(hObject,'String')) returns popupmenu1 contents as cell array
-%        contents{get(hObject,'Value')} returns selected item from popupmenu1
+% Hints: contents = cellstr(get(hObject,'String')) returns ListaAproximaciones contents as cell array
+%        contents{get(hObject,'Value')} returns selected item from ListaAproximaciones
+
 
 
 % --- Executes during object creation, after setting all properties.
-function popupmenu1_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to popupmenu1 (see GCBO)
+function ListaAproximaciones_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to ListaAproximaciones (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 
@@ -163,5 +168,10 @@ function Mostrar_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 global matriz;
-% deberia ver como graficar
-Mostrar
+
+aprox=get(handles.ListaAproximaciones,'Value');
+funcionAprox=get(handles.checkMostrarFunc,'Value');
+detalleCalculo=get(handles.checkDetalleCalc,'Value');
+visualizar=get(handles.checkVisualizar,'Value');
+
+Mostrar(funcionAprox,detalleCalculo,visualizar,aprox);
