@@ -69,15 +69,26 @@ function rectaMC
         x(i)=mat(1,i);
         y(i)=mat(2,i);
     end
-%     A=[n,sum(x);sum(x),sum(x.*x)];
-%     B=[sum(y);sum(x.*y)];
-%     C=mldivide(A,B);
-%     plot(x,y,'bs',[1,10],C(1)+C(2)*[1,10],'-r');
-% Ab=C
+
     A=[sum(x.^2),sum(x);sum(x),n];
     C=[sum(x.*y);sum(y)];
     b=mldivide(A,C);
-    plot(x,y,'bs',[0,15],b(1)+b(2)*[0,15],'-r');
+    maximoX=max(x);
+    maximoY=max(y);
+    minimoX=min(x);
+    minimoY=min(y);
+    if (maximoX>=maximoY)
+        v=maximoX;
+    else
+        v=maximoY;
+    end
+    if (minimoX<=minimoY)
+        u=minimoX;
+    else
+        u=minimoY;
+    end
+    
+    plot(x,y,'*',[-u,v],polyval(b,[-u,v]),'-b');
 
 function aproximar(valor)
     switch valor
@@ -133,4 +144,5 @@ function volver_Callback(hObject, eventdata, handles)
 % hObject    handle to volver (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+
 close Mostrar
