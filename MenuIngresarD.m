@@ -151,8 +151,7 @@ function volver_Callback(hObject, eventdata, handles)
 
 global matriz;
 datosAnteriores= get(handles.uitable2,'Data');
-% matriz=table2array(datosAnteriores);
-matriz=datosAnteriores(:,:);
+matriz=cell2mat(datosAnteriores(:,:));
 guidata(hObject,handles);
 
 %  % get the handle of Gui1

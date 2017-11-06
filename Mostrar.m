@@ -61,12 +61,28 @@ function visualizar(valor)
      if(valor==1)
 %        agregar-----> funcion para visualizar distribucion de puntos
      end
-  
+function rectaMC
+    global const matriz;
+    mat=transpose(matriz);
+    n=length(mat);
+    for i=1:n
+        x(i)=mat(1,i);
+        y(i)=mat(2,i);
+    end
+%     A=[n,sum(x);sum(x),sum(x.*x)];
+%     B=[sum(y);sum(x.*y)];
+%     C=mldivide(A,B);
+%     plot(x,y,'bs',[1,10],C(1)+C(2)*[1,10],'-r');
+% Ab=C
+    A=[sum(x.^2),sum(x);sum(x),n];
+    C=[sum(x.*y);sum(y)];
+    b=mldivide(A,C);
+    plot(x,y,'bs',[0,15],b(1)+b(2)*[0,15],'-r');
 
 function aproximar(valor)
     switch valor
         case 1
-%             recta minimos cuad
+            rectaMC
         case 2
 %             Parábola de MC
         case 3
