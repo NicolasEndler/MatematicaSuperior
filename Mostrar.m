@@ -88,7 +88,7 @@ function rectaMC
         u=minimoY;
     end
     
-    plot(x,y,'*',[-u,v],polyval(b,[-u,v]),'-b');
+    plot(x,y,'*',[-u-2,v+2],polyval(b,[-u-2,v+2]),'-b');
 
 function aproximar(valor)
     switch valor
