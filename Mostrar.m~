@@ -85,7 +85,7 @@ function potencial
     minimoX=min(valx);
     x=minimoX:maximoX;
     y=exp(b(2))*x^b(1);
-     plot(valx,valy,'*',x,y,'-b');
+    plot(x,y);
 function exponencial 
      global const matriz;
     mat=transpose(matriz);
