@@ -84,7 +84,7 @@ function potencial
     maximoX=max(valx);
     minimoX=min(valx);
     x=minimoX:maximoX;
-    y=log(b(1))*x^b(0);
+    y=log(b(2))*x^b(1);
     plot(x,y);
 function exponencial 
      global const matriz;
@@ -108,7 +108,7 @@ function exponencial
     maximoX=max(valx);
     minimoX=min(valx);
     x=minimoX:maximoX;
-    y=log(b(1))*exp(valx*b(0));
+    y=log(b(2))*exp(valx*b(1));
     plot(x,y);
     
     %A*sumX2 + B*sumx = sumXY;
@@ -118,14 +118,18 @@ function rectaMC
     global const matriz;
     mat=transpose(matriz);
     n=length(mat);
+%     obtengo los puntos en un vector x e y
     for i=1:n
         x(i)=mat(1,i);
         y(i)=mat(2,i);
     end
-
+% realizo las sumatorias en una matriz cuadrada 2x2
     A=[sum(x.^2),sum(x);sum(x),n];
     C=[sum(x.*y);sum(y)];
+%     obtengo b de Ab=C
     b=mldivide(A,C);
+%     calculo maximo y minimo valor de los puntos ingresados para ajustar
+%     el grafico
     maximoX=max(x);
     maximoY=max(y);
     minimoX=min(x);
@@ -140,7 +144,7 @@ function rectaMC
     else
         u=minimoY;
     end
-    
+%     grafico: los puntos (x,y) y la recta 
     plot(x,y,'*',[-u-2,v+2],polyval(b,[-u-2,v+2]),'-b');
 
 function aproximar(valor)
