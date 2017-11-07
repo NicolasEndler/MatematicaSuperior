@@ -24,7 +24,7 @@ function varargout = Comparar(varargin)
 
 % Last Modified by GUIDE v2.5 26-Oct-2017 10:53:13
 
-% Begin initialization code - DO NOT EDIT
+% Begin initialization code - DO NOT EDIT 
 gui_Singleton = 1;
 gui_State = struct('gui_Name',       mfilename, ...
                    'gui_Singleton',  gui_Singleton, ...
