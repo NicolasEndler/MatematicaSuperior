@@ -61,7 +61,31 @@ function visualizar(valor)
      if(valor==1)
 %        agregar-----> funcion para visualizar distribucion de puntos
      end
-
+function potencial
+       global const matriz;
+    mat=transpose(matriz);
+    n=length(mat);
+    
+    for i=1:n
+        valx(i)=mat(1,i);
+        valy(i)=mat(2,i);
+        lnY(i) = log(valy(i));
+        lnX(i) = log(valx(i));
+        XY = lnX(i)*lnY(i);
+        x2 = lnX(i)^2;
+    end   
+    sumx=sum(valx);
+    sumLnY=sum(lnY);
+    sumXY = sum(XY);
+    sumX2 =  sum(x2);
+    A=[sumX2, sumx; sumx,n ];
+    C=[sumXY; sumLnY];
+    b=mldivide(A,C);
+    maximoX=max(valx);
+    minimoX=min(valx);
+    x=minimoX:maximoX;
+    y=log(b(1))*x^b(0);
+    plot(x,y);
 function exponencial 
      global const matriz;
     mat=transpose(matriz);
@@ -70,7 +94,7 @@ function exponencial
     for i=1:n
         valx(i)=mat(1,i);
         valy(i)=mat(2,i);
-        lnY(i) = log(alvy(i));
+        lnY(i) = log(valy(i));
         XY = valx(i)*lnY(i);
         x2 = valx(i)^2;
     end
@@ -84,7 +108,7 @@ function exponencial
     maximoX=max(valx);
     minimoX=min(valx);
     x=minimoX:maximoX;
-    y=log(b(0))*exp(valx*b(1));
+    y=log(b(1))*exp(valx*b(0));
     plot(x,y);
     
     %A*sumX2 + B*sumx = sumXY;
@@ -128,7 +152,7 @@ function aproximar(valor)
         case 3
              exponencial
         case 4
-%             Aprox. Potencial
+            potencial
         case 5
 %             Aprox. Hipérbola
     end
