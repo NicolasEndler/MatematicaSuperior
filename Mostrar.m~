@@ -61,6 +61,62 @@ function visualizar(valor)
      if(valor==1)
 %        agregar-----> funcion para visualizar distribucion de puntos
      end
+function hiperbolica
+  global const matriz;
+    mat=transpose(matriz);
+    n=length(mat);
+    
+    for i=1:n
+        valx(i)=mat(1,i);
+        valy(i)=mat(2,i);
+        invy(i) = 1/valy(i);
+        XY(i) = valx*invy;
+        x2(i)=valx(i)^2;
+    end   
+    sumx=sum(valx);
+    suminvY=sum(invY);
+    sumXY = sum(XY);
+    sumX2 =  sum(x2);
+    A=[sumX2, sumx; sumx,n ];
+    C=[sumXY; suminvY];
+    b=mldivide(A,C);
+    maximoX=max(valx);
+    minimoX=min(valx);
+    x=minimoX:maximoX;
+    valA = 1/b(1);
+    valB = exp(b(2));
+    y=valB*exp(x*b(1));
+    plot(valx,valy,'*',x,y,'-b');
+function parabolica
+    global const matriz;
+    mat=transpose(matriz);
+    n=length(mat);
+    
+    for i=1:n
+        valx(i)=mat(1,i);
+        valy(i)=mat(2,i);
+        XY(i) = valx(i)*valy(i);
+        x2(i) = valx(i)^2;
+        x3(i) = valx(i)^3;
+        x4(i) = valx(i)^4;
+        X2Y(i) = x2(i)*valy(i);
+    end   
+    sumx=sum(valx);
+    sumx2=sum(x2);
+    sumx3=sum(x3);
+    sumx4=sum(x4);
+    sumy=sum(valy);
+    sumXY=sum(XY);
+    sumX2Y = sum(X2Y)
+    A=[sumx4, sumx3, sumx2; sumx3, sumx2,sumx; sumx2,sumx,n];
+    C=[sumX2Y;sumXY;sumy];
+    b=mldivide(A,C);
+    maximoX=max(valx);
+    minimoX=min(valx);
+    x=minimoX:maximoX;
+    y=b(1)*x.^2+b(2)*x+b(3);
+    plot(valx,valy,'*',x,y,'-b');
+    
 function potencial
        global const matriz;
     mat=transpose(matriz);
@@ -86,7 +142,7 @@ function potencial
     x=minimoX:maximoX;
     valb=exp(b(2));
     vala=b(1);
-    y=valb*(x^(vala));
+    y=valb*(x.^(vala));
     plot(valx,valy,'*',x,y,'-b');
 function exponencial 
      global const matriz;
@@ -155,7 +211,7 @@ function aproximar(valor)
         case 1
             rectaMC
         case 2
-%             Parábola de MC
+             parabolica
         case 3
              exponencial
         case 4
