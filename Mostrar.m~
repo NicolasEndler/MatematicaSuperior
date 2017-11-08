@@ -74,7 +74,7 @@ function potencial
         XY(i) = lnX(i)*lnY(i);
         x2(i) = lnX(i)^2;
     end   
-    sumx=sum(valx);
+    sumx=sum(lnX);
     sumLnY=sum(lnY);
     sumXY = sum(XY);
     sumX2 =  sum(x2);
@@ -84,8 +84,10 @@ function potencial
     maximoX=max(valx);
     minimoX=min(valx);
     x=minimoX:maximoX;
-    y=exp(b(2))*x^b(1);
-    plot(x,y);
+    valb=exp(b(2));
+    vala=b(1);
+    y=valb*(x^(vala));
+    plot(valx,valy,'*',x,y,'-b');
 function exponencial 
      global const matriz;
     mat=transpose(matriz);
