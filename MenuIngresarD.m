@@ -142,7 +142,8 @@ celda= {x y};
       set(handles.uitable2,'Data',DatosNuevos);
 
  end
-
+set(handles.x,'String','');
+set(handles.y,'String','');
 % --- Executes on button press in volver.
 function volver_Callback(hObject, eventdata, handles)
 % hObject    handle to volver (see GCBO)

@@ -74,7 +74,7 @@ function mostrarAproximacion(tipo,cantDec)
             case 5
 %                 \frac{n!}{k!(n-k)!}
                 b=getappdata(0,'evalue');
-                pol=strcat('$','Y =','\frac{',num2str(b(1)),'}','{','X+','(',num2str(b(1)),')','}','$');
+                pol=strcat('$','Y =','\frac,num2str(b(1)),'X^','{',num2str(b(1)),'}','$');
                 handles = guidata(gcf);
                 tx = title(pol,'interpreter','latex');
                 tx.FontSize=15;
