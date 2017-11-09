@@ -173,5 +173,6 @@ aprox=get(handles.ListaAproximaciones,'Value');
 funcionAprox=get(handles.checkMostrarFunc,'Value');
 detalleCalculo=get(handles.checkDetalleCalc,'Value');
 visualizar=get(handles.checkVisualizar,'Value');
+cantDecimales=getappdata(0,'evalue');
 
-Mostrar(funcionAprox,detalleCalculo,visualizar,aprox);
+Mostrar(funcionAprox,detalleCalculo,visualizar,aprox,cantDecimales);
