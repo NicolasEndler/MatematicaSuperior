@@ -203,8 +203,7 @@ function rectaMC
         u=minimoY;
     end
 %     grafico: los puntos (x,y) y la recta 
-    plot(x,y,'*',[-u-2,v+2],polyval(b,[-u-2,v+2]),'-b');
-   % plot(x,y,'*',[-u-2,v+2],polyval(b,[-u-2,v+2]),'-b');
+  plot(x,y,'*',[-u-2,v+2],polyval(b,[-u-2,v+2]),'-b');
 
 function aproximar(valor)
     switch valor

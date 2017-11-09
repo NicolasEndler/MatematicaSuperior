@@ -157,8 +157,16 @@ valoresParabola = getValores(matriz, a, b, c, 'a*x^2 + b*x + c');
 datos = AgregarColumna(parabola,datos,valoresParabola);
 
 [a, b, c] = getParametrosExponencial;
-valoresExponencial = getValores(matriz, a, b, c, 'a * b^x + c');
+valoresExponencial = getValores(matriz, a, b, c, 'b * exp(a*x)');
 datos = AgregarColumna(exponencial,datos,valoresExponencial);
+
+[a, b, c] = getParametrosPotencial;
+valoresPotencial = getValores(matriz, a, b, c, 'b * (x^a)');
+datos = AgregarColumna(potencial,datos,valoresPotencial);
+
+[a, b, c] = getParametrosHiperbolica;
+valoresHiperbolica = getValores(matriz, a, b, c, 'a / (x+b)');
+datos = AgregarColumna(hiperbola,datos,valoresHiperbolica);
 
 [columna, errorRecta] = getErrores(matriz, valoresRecta);
 datos = AgregarColumna(recta,datos,columna);
@@ -167,6 +175,12 @@ datos = AgregarColumna(recta,datos,columna);
 datos = AgregarColumna(parabola,datos,columna);
 
 [columna, errorExponencial] = getErrores(matriz, valoresExponencial);
+datos = AgregarColumna(exponencial,datos,columna);
+
+[columna, errorPotencial] = getErrores(matriz, valoresPotencial);
+datos = AgregarColumna(exponencial,datos,columna);
+
+[columna, errorHiperbolica] = getErrores(matriz, valoresHiperbolica);
 datos = AgregarColumna(exponencial,datos,columna);
 
 
@@ -185,21 +199,21 @@ function [a, b, c] = getParametrosParabola
     % Estos van de ejemplo
     
 function [a, b, c] = getParametrosExponencial
-    % Obtener la a,b,c de la exponencial (y=ab^x + c)
+    % Obtener la a,b,c de la exponencial (y=b * e^(ax))
         a = 1;
         b = 1;
         c = 1;
     % Estos van de ejemplo
 
 function [a, b, c] = getParametrosPotencial
-    % Obtener la a,b,c de la potencial ....
+    % Obtener la a,b,c de la potencial [y = b(x^a)]
         a = 1;
         b = 1;
         c = 1;
     % Estos van de ejemplo
 
 function [a, b, c] = getParametrosHiperbolica
-    % Obtener la a,b,c de la hiperbolica ....
+    % Obtener la a,b,c de la hiperbolica [y=a/(x+b)]
         a = 1;
         b = 1;
         c = 1;
