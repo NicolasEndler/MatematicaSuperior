@@ -48,24 +48,28 @@ function mostrarAproximacion(tipo,cantDec)
         switch tipo
             case 1
                 b=getappdata(0,'evalue');
+                b = obtenerDecimales(b,cantDec);
                 pol=strcat('$','Y =',num2str(b(1)),'X^2','+',num2str(b(2)),'X','$');
                 handles = guidata(gcf);
                 tx = title(pol,'interpreter','latex');
                 tx.FontSize=15;
             case 2
                 b=getappdata(0,'evalue');
+                b = obtenerDecimales(b,cantDec);
                 pol=strcat('$','Y =',num2str(b(1)),'X^2','+',num2str(b(2)),'X','+','(',num2str(b(3)),')','$');
                 handles = guidata(gcf);
                 tx = title(pol,'interpreter','latex');
                 tx.FontSize=15;
             case 3
                 b=getappdata(0,'evalue');
+                b = obtenerDecimales(b,cantDec);
                 pol=strcat('$','Y =',num2str(b(2)),'e^','{',num2str(b(1)),'X','}','$');
                 handles = guidata(gcf);
                 tx = title(pol,'interpreter','latex');
                 tx.FontSize=15;
             case 4
                 b=getappdata(0,'evalue');
+                b = obtenerDecimales(b,cantDec);
                 pol=strcat('$','Y =',num2str(b(2)),'X^','{',num2str(b(1)),'}','$');
                 handles = guidata(gcf);
                 tx = title(pol,'interpreter','latex');
@@ -74,13 +78,14 @@ function mostrarAproximacion(tipo,cantDec)
             case 5
 %                 \frac{n!}{k!(n-k)!}
                 b=getappdata(0,'evalue');
+                b = obtenerDecimales(b,cantDec);
                 pol=strcat('$','Y =','\frac{',num2str(b(1)),'}','{','X+','(',num2str(b(1)),')','}','$');
                 handles = guidata(gcf);
                 tx = title(pol,'interpreter','latex');
                 tx.FontSize=15;
 
         end
-
+end
 function mostrar(valor,tipo,cantDecimales)
     if(valor==1)
         mostrarAproximacion(tipo,cantDecimales);
@@ -97,6 +102,19 @@ function visualizar(valor)
      if(valor==1)
 %        agregar-----> funcion para visualizar distribucion de puntos
      end
+function vectorDecimal = obtenerDecimales(vector, cantDecimales)
+    valorDecimal = 10.^cantDecimales;
+    n=length(vector);
+    for i=1:n
+    val = vector(i);
+    valor = val*valorDecimal;
+    floor(valor);
+    decimal = valor./valorDecimal;
+    vectorDecimal(i) = decimal;
+    end
+    
+    
+end
 function hiperbolica
   global const matriz;
     mat=transpose(matriz);
@@ -124,6 +142,7 @@ function hiperbolica
     y=valA/(x+valB);
     plot(valx,valy,'*',x,y,'-b');
     setappdata(0,'evalue',b);
+end
 function parabolica
     global const matriz;
     mat=transpose(matriz);
@@ -154,7 +173,8 @@ function parabolica
     y=b(1)*x.^2+b(2)*x+b(3);
     plot(valx,valy,'*',x,y,'-b');
     setappdata(0,'evalue',b);
-    
+
+end    
 function potencial
        global const matriz;
     mat=transpose(matriz);
@@ -183,6 +203,7 @@ function potencial
     y=valb*(x.^(vala));
     plot(valx,valy,'*',x,y,'-b');
     setappdata(0,'evalue',b);
+end
 function exponencial 
      global const matriz;
     mat=transpose(matriz);
@@ -210,9 +231,7 @@ function exponencial
     plot(valx,valy,'*',x,y,'-b');
     setappdata(0,'evalue',b);
     
-    %A*sumX2 + B*sumx = sumXY;
-    %A*sumx + B*n = sumLnY;
-    
+end    
 function rectaMC
     global const matriz;
     mat=transpose(matriz);
@@ -247,7 +266,7 @@ function rectaMC
   plot(x,y,'*',[-u-2,v+2],polyval(b,[-u-2,v+2]),'-b');
   
   setappdata(0,'evalue',b);
-
+end
 function aproximar(valor)
     switch valor
         case 1
@@ -263,7 +282,7 @@ function aproximar(valor)
     end
 
 % fin funciones
-
+end
 % --- Executes just before Mostrar is made visible.
 function Mostrar_OpeningFcn(hObject, eventdata, handles, varargin)
 % This function has no output args, see OutputFcn.
