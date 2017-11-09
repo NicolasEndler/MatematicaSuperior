@@ -118,7 +118,7 @@ function hiperbolica
     b=mldivide(A,C);
     maximoX=max(valx);
     minimoX=min(valx);
-    x=minimoX:maximoX;
+    x=minimoX-2:maximoX+2;
     valA = 1/b(1);
     valB = b(2)*valA;
     y=valA/(x+valB);
@@ -150,7 +150,7 @@ function parabolica
     b=mldivide(A,C);
     maximoX=max(valx);
     minimoX=min(valx);
-    x=minimoX:maximoX;
+    x=minimoX-2:maximoX+2;
     y=b(1)*x.^2+b(2)*x+b(3);
     plot(valx,valy,'*',x,y,'-b');
     setappdata(0,'evalue',b);
@@ -177,7 +177,7 @@ function potencial
     b=mldivide(A,C);
     maximoX=max(valx);
     minimoX=min(valx);
-    x=minimoX:maximoX;
+    x=minimoX-2:maximoX+2;
     valb=exp(b(2));
     vala=b(1);
     y=valb*(x.^(vala));
@@ -204,7 +204,7 @@ function exponencial
     b=mldivide(A,C);
     maximoX=max(valx);
     minimoX=min(valx);
-    x=minimoX:maximoX;
+    x=minimoX-2:maximoX+2;
     valB = exp(b(2));
     y=valB*exp(x*b(1));
     plot(valx,valy,'*',x,y,'-b');
