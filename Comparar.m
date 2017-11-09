@@ -103,11 +103,11 @@ end
 
 function headers = getTableHeaders(recta, parabola, exponencial, potencial, hiperbola)
 headers = { 'Xn' 'f(Xn)' };
-headers = agregarHeader(headers, recta, 'Recta MC');
-headers = agregarHeader(headers, parabola, 'Parabola MC');
-headers = agregarHeader(headers, exponencial, 'Exponencial');
-headers = agregarHeader(headers, potencial, 'Potencial');
-headers = agregarHeader(headers, hiperbola, 'Hiperbola');
+headers = agregarHeader(headers, recta, 'Modelo Recta MC');
+headers = agregarHeader(headers, parabola, 'Modelo Parabola MC');
+headers = agregarHeader(headers, exponencial, 'Modelo Exponencial');
+headers = agregarHeader(headers, potencial, 'Modelo Potencial');
+headers = agregarHeader(headers, hiperbola, 'Modelo Hiperbola');
 headers = agregarHeader(headers, recta, 'Error Recta MC');
 headers = agregarHeader(headers, parabola, 'Error Parabola MC');
 headers = agregarHeader(headers, exponencial, 'Error Exponencial');
@@ -115,10 +115,12 @@ headers = agregarHeader(headers, potencial, 'Error Potencial');
 headers = agregarHeader(headers, hiperbola, 'Error Hiperbola');
 
 function CompararAproximaciones(handles, recta, parabola, exponencial, potencial, hiperbola)
-tableHeaders = getTableHeaders(recta, parabola, exponencial, potencial, hiperbola);
-set(handles.TablaComparacion,'ColumnName', tableHeaders);
-data = getDatos(recta, parabola, exponencial, potencial, hiperbola);
-set(handles.TablaComparacion,'Data', data);
+    tableHeaders = getTableHeaders(recta, parabola, exponencial, potencial, hiperbola);
+    set(handles.TablaComparacion,'ColumnName', tableHeaders);
+    [data, mejorAproximacion] = getDatos(recta, parabola, exponencial, potencial, hiperbola);
+    set(handles.TablaComparacion,'Data', data);
+    set(handles.MejorAproximacion,'String', strcat('Mejor aproximacion: ', mejorAproximacion));
+
 
 function datos = AgregarColumna(condicion, datosAnteriores, nuevaColumna)
     if (condicion == 0)
@@ -143,11 +145,10 @@ function [valores, errorTotal] = getErrores(matriz, valoresAproximados)
         valores(i, 1) = errorCuadratico;
     end
 
-function datos = getDatos(recta, parabola, exponencial, potencial, hiperbola)
+function [datos, mejorAproximacion] = getDatos(recta, parabola, exponencial, potencial, hiperbola)
 global const matriz;
 datos = matriz;
 
-% valoresRecta = getValoresRecta(matriz);
 [a, b, c] = getParametrosRecta;
 valoresRecta = getValores(matriz, a, b, c, 'a*x+b');
 datos = AgregarColumna(recta,datos,valoresRecta);
@@ -178,11 +179,29 @@ datos = AgregarColumna(parabola,datos,columna);
 datos = AgregarColumna(exponencial,datos,columna);
 
 [columna, errorPotencial] = getErrores(matriz, valoresPotencial);
-datos = AgregarColumna(exponencial,datos,columna);
+datos = AgregarColumna(potencial,datos,columna);
 
 [columna, errorHiperbolica] = getErrores(matriz, valoresHiperbolica);
-datos = AgregarColumna(exponencial,datos,columna);
+datos = AgregarColumna(hiperbola,datos,columna);
 
+aproximacionesUsadas = [recta, parabola, exponencial, potencial, hiperbola];
+listadoErrores = [errorRecta, errorParabola, errorExponencial, errorPotencial, errorHiperbolica];
+mejorAproximacion = getMejorAproximacion(aproximacionesUsadas, listadoErrores);
+
+
+function aproximacion = getMejorAproximacion(aproximacionesUsadas, listadoErrores)
+    listadoAproximaciones = {'Recta MC' 'Parabola MC' 'Aprox. Exponencial' 'Aprox. Potencial' 'Aprox. Hiperbolica'};
+    aproximacion = 'Ninguna';
+    minimoError = -1;
+    for i=1:5
+        if (aproximacionesUsadas(i) && (listadoErrores(i) < minimoError || minimoError == -1))
+            minimoError = listadoErrores(i);
+            aproximacion = listadoAproximaciones(i);
+        end
+    end
+    
+        
+        
 
 function [a, b, c] = getParametrosRecta
     % Obtener la a,b de la recta (y=ax+b)

@@ -102,7 +102,12 @@ else
 end
 
 function headers = getTableHeaders(recta, parabola, exponencial, potencial, hiperbola)
+listadoHeaders = {'Recta MC' 'Parabola MC' 'Exponencial' 'Potencial' 'Hiperbola'
+                  'Error Recta MC' 'Error Parabola MC' 'Error Exponencial' 'Error Potencial' 'Error Hiperbola'};
 headers = { 'Xn' 'f(Xn)' };
+for i=1:5
+end
+
 headers = agregarHeader(headers, recta, 'Recta MC');
 headers = agregarHeader(headers, parabola, 'Parabola MC');
 headers = agregarHeader(headers, exponencial, 'Exponencial');
@@ -117,8 +122,10 @@ headers = agregarHeader(headers, hiperbola, 'Error Hiperbola');
 function CompararAproximaciones(handles, recta, parabola, exponencial, potencial, hiperbola)
 tableHeaders = getTableHeaders(recta, parabola, exponencial, potencial, hiperbola);
 set(handles.TablaComparacion,'ColumnName', tableHeaders);
-data = getDatos(recta, parabola, exponencial, potencial, hiperbola);
+[data, mejorAproximacion] = getDatos(recta, parabola, exponencial, potencial, hiperbola);
 set(handles.TablaComparacion,'Data', data);
+set(handles.MejorAproximacion,'String', strcat('Mejor aproximacion: ', mejorAproximacion));
+
 
 function datos = AgregarColumna(condicion, datosAnteriores, nuevaColumna)
     if (condicion == 0)
@@ -143,11 +150,10 @@ function [valores, errorTotal] = getErrores(matriz, valoresAproximados)
         valores(i, 1) = errorCuadratico;
     end
 
-function datos = getDatos(recta, parabola, exponencial, potencial, hiperbola)
+function [datos, mejorAproximacion] = getDatos(recta, parabola, exponencial, potencial, hiperbola)
 global const matriz;
 datos = matriz;
 
-% valoresRecta = getValoresRecta(matriz);
 [a, b, c] = getParametrosRecta;
 valoresRecta = getValores(matriz, a, b, c, 'a*x+b');
 datos = AgregarColumna(recta,datos,valoresRecta);
@@ -161,8 +167,12 @@ valoresExponencial = getValores(matriz, a, b, c, 'b * exp(a*x)');
 datos = AgregarColumna(exponencial,datos,valoresExponencial);
 
 [a, b, c] = getParametrosPotencial;
-valoresPotencial = getValores(matriz, a, b, c, 'b * x^a)');
-datos = AgregarColumna(exponencial,datos,valoresPotencial);
+valoresPotencial = getValores(matriz, a, b, c, 'b * (x^a)');
+datos = AgregarColumna(potencial,datos,valoresPotencial);
+
+[a, b, c] = getParametrosHiperbolica;
+valoresHiperbolica = getValores(matriz, a, b, c, 'a / (x+b)');
+datos = AgregarColumna(hiperbola,datos,valoresHiperbolica);
 
 [columna, errorRecta] = getErrores(matriz, valoresRecta);
 datos = AgregarColumna(recta,datos,columna);
@@ -173,6 +183,29 @@ datos = AgregarColumna(parabola,datos,columna);
 [columna, errorExponencial] = getErrores(matriz, valoresExponencial);
 datos = AgregarColumna(exponencial,datos,columna);
 
+[columna, errorPotencial] = getErrores(matriz, valoresPotencial);
+datos = AgregarColumna(potencial,datos,columna);
+
+[columna, errorHiperbolica] = getErrores(matriz, valoresHiperbolica);
+datos = AgregarColumna(hiperbola,datos,columna);
+
+aproximacionesUsadas = [recta, parabola, exponencial, potencial, hiperbola];
+listadoErrores = [errorRecta, errorParabola, errorExponencial, errorPotencial, errorHiperbolica];
+mejorAproximacion = getMejorAproximacion(aproximacionesUsadas, listadoErrores);
+
+function aproximacion = getMejorAproximacion(aproximacionesUsadas, listadoErrores)
+    listadoAproximaciones = {'Recta MC' 'Parabola MC' 'Aprox. Exponencial' 'Aprox. Potencial' 'Aprox. Hiperbolica'};
+    aproximacion = 'Ninguna';
+    minimoError = -1;
+    for i=1:5
+        if (aproximacionesUsadas(i) && (listadoErrores(i) < minimoError || minimoError == -1))
+            minimoError = listadoErrores(i);
+            aproximacion = listadoAproximaciones(i);
+        end
+    end
+    
+        
+        
 
 function [a, b, c] = getParametrosRecta
     % Obtener la a,b de la recta (y=ax+b)
@@ -189,7 +222,7 @@ function [a, b, c] = getParametrosParabola
     % Estos van de ejemplo
     
 function [a, b, c] = getParametrosExponencial
-    % Obtener la a,b,c de la exponencial (y=b* )
+    % Obtener la a,b,c de la exponencial (y=b * e^(ax))
         a = 1;
         b = 1;
         c = 1;
@@ -203,7 +236,7 @@ function [a, b, c] = getParametrosPotencial
     % Estos van de ejemplo
 
 function [a, b, c] = getParametrosHiperbolica
-    % Obtener la a,b,c de la hiperbolica ....
+    % Obtener la a,b,c de la hiperbolica [y=a/(x+b)]
         a = 1;
         b = 1;
         c = 1;
