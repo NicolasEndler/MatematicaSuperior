@@ -163,7 +163,7 @@ function parabolica
     sumx4=sum(x4);
     sumy=sum(valy);
     sumXY=sum(XY);
-    sumX2Y = sum(X2Y)
+    sumX2Y = sum(X2Y);
     A=[sumx4, sumx3, sumx2; sumx3, sumx2,sumx; sumx2,sumx,n];
     C=[sumX2Y;sumXY;sumy];
     b=mldivide(A,C);

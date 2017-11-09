@@ -154,19 +154,9 @@ global matriz;
 datosAnteriores= get(handles.uitable2,'Data');
 matriz=cell2mat(datosAnteriores(:,:));
 guidata(hObject,handles);
-
-%  % get the handle of Gui1
-%  h = findobj('Tag','MenuMain');
-%  % if exists (not empty)
-%  if ~isempty(h)
-%     % get handles and other user-defined data associated to Gui1
-%     g1data = guidata(h);
-%     % maybe you want to set the text in Gui2 with that from Gui1
-%     set(handles.matriz,'Array',get(g1data.edit1,'Array'));
-%     % maybe you want to get some data that was saved to the Gui1 app
-% %     x = getappdata(h,'x');
-%  end
-
+cd=get(handles.cantDecimales,'String');
+cd=str2double(cd);
+setappdata(0,'evalue',cd);
 close MenuIngresarD;
 
 
