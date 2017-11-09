@@ -45,7 +45,6 @@ end
 %  funciones propias-------------------------------------------------
 
 function mostrar(valor)
-
     if(valor==1)
 %        agregar-----> funcion que muestre funcion aproximante 
     end
@@ -205,6 +204,7 @@ function rectaMC
     end
 %     grafico: los puntos (x,y) y la recta 
     plot(x,y,'*',[-u-2,v+2],polyval(b,[-u-2,v+2]),'-b');
+   % plot(x,y,'*',[-u-2,v+2],polyval(b,[-u-2,v+2]),'-b');
 
 function aproximar(valor)
     switch valor
@@ -243,6 +243,7 @@ mostrar(varargin{1});
 detalle(varargin{2});
 visualizar(varargin{3});    
 aproximar(varargin{4});
+
 
 % --- Outputs from this function are returned to the command line.
 function varargout = Mostrar_OutputFcn(hObject, eventdata, handles) 

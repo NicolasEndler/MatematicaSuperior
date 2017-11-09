@@ -127,13 +127,6 @@ function datos = AgregarColumna(condicion, datosAnteriores, nuevaColumna)
         datos = [datosAnteriores, nuevaColumna];
     end
     
-function valores = getValores(matriz, a, b, c, expresion)
-    n=size(matriz, 1);
-    for i=1:n
-        x = matriz(i, 1);
-        valores(i, 1) = eval(expresion);
-    end
-    
 function [valores, errorTotal] = getErrores(matriz, valoresAproximados)
     n=size(matriz, 1);
     errorTotal = 0;
@@ -148,17 +141,11 @@ global const matriz;
 datos = matriz;
 
 % valoresRecta = getValoresRecta(matriz);
-[a, b, c] = getParametrosRecta;
-valoresRecta = getValores(matriz, a, b, c, 'a*x+b');
+valoresRecta = getValores(matriz, getParametrosRecta(), 'ax+b');
 datos = AgregarColumna(recta,datos,valoresRecta);
 
-[a, b, c] = getParametrosParabola;
-valoresParabola = getValores(matriz, a, b, c, 'a*x^2 + b*x + c');
+valoresParabola = getValoresParabola(matriz);
 datos = AgregarColumna(parabola,datos,valoresParabola);
-
-[a, b, c] = getParametrosExponencial;
-valoresExponencial = getValores(matriz, a, b, c, 'a * b^x + c');
-datos = AgregarColumna(exponencial,datos,valoresExponencial);
 
 [columna, errorRecta] = getErrores(matriz, valoresRecta);
 datos = AgregarColumna(recta,datos,columna);
@@ -166,49 +153,42 @@ datos = AgregarColumna(recta,datos,columna);
 [columna, errorParabola] = getErrores(matriz, valoresParabola);
 datos = AgregarColumna(parabola,datos,columna);
 
-[columna, errorExponencial] = getErrores(matriz, valoresExponencial);
-datos = AgregarColumna(exponencial,datos,columna);
 
-
-function [a, b, c] = getParametrosRecta
-    % Obtener la a,b de la recta (y=ax+b)
+function [a, b, c] = getParametrosRecta()
+    % Obtener la m,b de la recta de aproximacion lineal (y=ax+b)
         a = 1;
         b = 1;
         c = 0;
     % Estos van de ejemplo
+function valores = getValoresRecta(matriz)
+    % Obtener la m,b de la recta de aproximacion lineal (y=mx+b)
+    m = 1;
+    b = 1;
+    % Estos van de ejemplo
+    n=size(matriz, 1);
+    for i=1:n
+        x = matriz(i, 1);
+        valores(i, 1) = m * x + b;
+    end
     
-function [a, b, c] = getParametrosParabola
-    % Obtener la a,b,c de la parabola (y=ax^2 + bx + c)
-        a = 1;
-        b = 1;
-        c = 1;
+function valores = getValoresParabola(matriz)
+    % Obtener la a, b, c de la parabola de aproximacion lineal (y=ax^2+bx+c)
+    a = 1;
+    b = 1;
+    c = 1;
     % Estos van de ejemplo
-    
-function [a, b, c] = getParametrosExponencial
-    % Obtener la a,b,c de la exponencial (y=ab^x + c)
-        a = 1;
-        b = 1;
-        c = 1;
-    % Estos van de ejemplo
+    n=size(matriz, 1);
+    for i=1:n
+        x = matriz(i, 1);
+        valores(i, 1) = a*x^2 + b*x + c;
+    end
 
-function [a, b, c] = getParametrosPotencial
-    % Obtener la a,b,c de la potencial ....
-        a = 1;
-        b = 1;
-        c = 1;
-    % Estos van de ejemplo
-
-function [a, b, c] = getParametrosHiperbolica
-    % Obtener la a,b,c de la hiperbolica ....
-        a = 1;
-        b = 1;
-        c = 1;
-    % Estos van de ejemplo
-    
-
- 
-
-
+function valores = getValores(matriz,a, b, c, expresion)
+    n=size(matriz, 1);
+    for i=1:n
+        x = matriz(i, 1);
+        valores(i, 1) = eval(expresion);
+    end
     
 
     
