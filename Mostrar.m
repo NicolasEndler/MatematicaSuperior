@@ -254,27 +254,19 @@ function rectaMC(conPuntos)
     for i=1:n
         x(i)=mat(1,i);
         y(i)=mat(2,i);
-        x2(i) = x(i).^2;
-        xy(i) = x(i)*y(i); 
     end
-% realizo las sumatorias en una matriz cuadrada 2x2 = 
-    sumx = sum(x);
-    sumy = sum(y);
-    sumXY = sum(xy);
-    sumx2 = sum(x2);
-    A=[sumx2,sumx;sumx,n];
-    C=[sumXY;sumy];
+% realizo las sumatorias en una matriz cuadrada 2x2
+    A=[sum(x.^2),sum(x);sum(x),n];
+    C=[sum(x.*y);sum(y)];
 %     obtengo b de Ab=C
     b=mldivide(A,C);
 %     calculo maximo y minimo valor de los puntos ingresados para ajustar
-    maximoX=max(x);
-    minimoX=min(x);
-    x1=minimoX-2:maximoX+2;
-    y1=x*b(1)+b(2);
+    Xmax=max(x);
+    Xmin=min(x);
+    x1=Xmin-2:Xmax+2;
+%     el grafico
+    y1 = (b(1)*x1)+b(2)
 %     grafico: los puntos (x,y) y la recta 
-%   plot(x,y,'*',[-u-2,v+2],polyval(b,[-u-2,v+2]),'-b');
-
-%     plot(x,y,'*',x,y1,'-b');
     v={x,y,x1,y1};
     graficar(conPuntos,v);
   
