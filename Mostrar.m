@@ -109,7 +109,7 @@ function vectorDecimal = obtenerDecimales(vector, cantDecimales)
     for i=1:n
     val = vector(i);
     valor = val*valorDecimal;
-    floor(valor);
+    valor = floor(valor);
     decimal = valor./valorDecimal;
     vectorDecimal(i) = decimal;
     end
