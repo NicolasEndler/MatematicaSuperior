@@ -50,7 +50,7 @@ function mostrarAproximacion(tipo,cantDec)
         switch tipo
             case 1
                 [a, b] = AproxRecta(matriz,cantDec);
-                pol=strcat('$','Y =',num2str(a),'X^2','+',num2str(b),'X','$');
+                pol=strcat('$','Y =',num2str(a),'X','+',num2str(b),'$');
                 handles = guidata(gcf);
                 tx = title(pol,'interpreter','latex');
                 tx.FontSize=15;
