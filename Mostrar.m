@@ -103,22 +103,22 @@ function [formula, a, b, c] = getParametrosYFormula(tipo, cantDecimales)
     end
 end
 
-function mostrar(valor,tipo,cantDecimales, handles)
-    global const matriz;
-    datos = RedondearMatrizDatos(matriz, cantDecimales);
-    [formula, a, b, c] = getParametrosYFormula(tipo, cantDecimales);
-    valores = HallarValores(matriz, a, b, c, strjoin(formula));
-    [errores, errorTotal] = HallarErrores(matriz, valores);
-    datos = [datos, valores, errores];
-    set(handles.TablaValores, 'Data', datos);
+function mostrar(valor,tipo,cantDecimales)
+
     if(valor==1)
         mostrarAproximacion(tipo,cantDecimales);
     end
 
 end
-function detalle(valor)
+function detalle(valor,tipo,cantDecimales,handles)
      if(valor==1)
-%        agregar-----> funcion que muestre fdetalle de calculo
+        global const matriz;
+        datos = RedondearMatrizDatos(matriz, cantDecimales);
+        [formula, a, b, c] = getParametrosYFormula(tipo, cantDecimales);
+        valores = HallarValores(matriz, a, b, c, strjoin(formula));
+        [errores, errorTotal] = HallarErrores(matriz, valores);
+        datos = [datos, valores, errores];
+        set(handles.TablaValores, 'Data', datos);
     end
 
 end
@@ -141,7 +141,6 @@ function hiperbolica(conPuntos)
         valx(i)=mat(1,i);
         valy(i)=mat(2,i);
         invy(i) = 1/valy(i);
-%         XY(i) = valx*invy;
         x2(i)=valx(i)^2;
     end
     XY = rdivide(valx,valy);
@@ -311,9 +310,11 @@ guidata(hObject, handles);
 % UIWAIT makes Mostrar wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
 
-detalle(varargin{2}); 
+
 aproximar(varargin{4},varargin{3});
-mostrar(varargin{1},varargin{4},varargin{5}, handles);
+detalle(varargin{2},varargin{4},varargin{5},handles); 
+mostrar(varargin{1},varargin{4},varargin{5});
+
 end
 % --- Outputs from this function are returned to the command line.
 function varargout = Mostrar_OutputFcn(hObject, eventdata, handles) 
