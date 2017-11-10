@@ -304,7 +304,7 @@ guidata(hObject, handles);
 detalle(varargin{2});
 visualizar(varargin{3});    
 aproximar(varargin{4});
-mostrar(varargin{1},varargin{4},0);
+mostrar(varargin{1},varargin{4},varargin{5});
 end
 % --- Outputs from this function are returned to the command line.
 function varargout = Mostrar_OutputFcn(hObject, eventdata, handles) 
