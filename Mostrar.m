@@ -44,42 +44,39 @@ end
 % End initialization code - DO NOT EDIT
 %  funciones propias-------------------------------------------------
 end
+
 function mostrarAproximacion(tipo,cantDec)
+        global const matriz;
         switch tipo
             case 1
-                b=getappdata(0,'evalue');
-                b = obtenerDecimales(b,cantDec);
-                pol=strcat('$','Y =',num2str(b(1)),'X^2','+',num2str(b(2)),'X','$');
+                [a, b] = AproxRecta(matriz,cantDec);
+                pol=strcat('$','Y =',num2str(a),'X^2','+',num2str(b),'X','$');
                 handles = guidata(gcf);
                 tx = title(pol,'interpreter','latex');
                 tx.FontSize=15;
             case 2
-                b=getappdata(0,'evalue');
-                b = obtenerDecimales(b,cantDec);
-                pol=strcat('$','Y =',num2str(b(1)),'X^2','+',num2str(b(2)),'X','+','(',num2str(b(3)),')','$');
+                [a, b, c] = AproxParabola(matriz, cantDec);
+                pol=strcat('$','Y =',num2str(a),'X^2','+',num2str(b),'X','+','(',num2str(c),')','$');
                 handles = guidata(gcf);
                 tx = title(pol,'interpreter','latex');
                 tx.FontSize=15;
             case 3
-                b=getappdata(0,'evalue');
-                b = obtenerDecimales(b,cantDec);
-                pol=strcat('$','Y =',num2str(b(2)),'e^','{',num2str(b(1)),'X','}','$');
+                [a, b] = AproxExponencial(matriz,cantDec);
+                pol=strcat('$','Y =',num2str(b),'e^','{',num2str(a),'X','}','$');
                 handles = guidata(gcf);
                 tx = title(pol,'interpreter','latex');
                 tx.FontSize=15;
             case 4
-                b=getappdata(0,'evalue');
-                b = obtenerDecimales(b,cantDec);
-                pol=strcat('$','Y =',num2str(b(2)),'X^','{',num2str(b(1)),'}','$');
+                [a, b] = AproxPotencial(matriz,cantDec);
+                pol=strcat('$','Y =',num2str(b),'X^','{',num2str(a),'}','$');
                 handles = guidata(gcf);
                 tx = title(pol,'interpreter','latex');
                 tx.FontSize=15;
 
             case 5
 %                 \frac{n!}{k!(n-k)!}
-                b=getappdata(0,'evalue');
-                b = obtenerDecimales(b,cantDec);
-                pol=strcat('$','Y =','\frac{',num2str(b(2)),'}','{','X+','(',num2str(b(1)),')','}','$');
+                [a, b] = AproxHiperbolica(matriz,cantDec);
+                pol=strcat('$','Y =','\frac{',num2str(a),'}','{','X+','(',num2str(b),')','}','$');
                 handles = guidata(gcf);
                 tx = title(pol,'interpreter','latex');
                 tx.FontSize=15;
@@ -108,17 +105,6 @@ function graficar(conPuntos,vectorValores)
     end
 end    
 
-function vectorDecimal = obtenerDecimales(vector, cantDecimales)
- if(cantDecimales>0)
-    valorDecimal = 10.^cantDecimales;
-    vectorDecimal = (floor(vector.*valorDecimal))./valorDecimal;
- else
-%      por defecto parte entera solamente
-
-     vectorDecimal = (floor(vector));
- end
-    
-end
 function hiperbolica(conPuntos)
   global const matriz;
     mat=transpose(matriz);
@@ -149,7 +135,6 @@ function hiperbolica(conPuntos)
     v={valx,valy,x,y};
     graficar(conPuntos,v);
 %     plot(valx,valy,'*',x,y,'-b');
-    setappdata(0,'evalue',b);
 end
 function parabolica(conPuntos)
     global const matriz;
@@ -182,7 +167,6 @@ function parabolica(conPuntos)
 %     plot(valx,valy,'*',x,y,'-b');
     v={valx,valy,x,y};
     graficar(conPuntos,v);
-    setappdata(0,'evalue',b);
 
 end    
 function potencial(conPuntos)
@@ -214,7 +198,6 @@ function potencial(conPuntos)
 %     plot(valx,valy,'*',x,y,'-b');
     v={valx,valy,x,y};
     graficar(conPuntos,v);
-    setappdata(0,'evalue',b);
 end
 function exponencial(conPuntos)
      global const matriz;
@@ -243,8 +226,6 @@ function exponencial(conPuntos)
 %     plot(valx,valy,'*',x,y,'-b');
     v={valx,valy,x,y};
     graficar(conPuntos,v);
-    setappdata(0,'evalue',b);
-    
 end    
 function rectaMC(conPuntos)
     global const matriz;
@@ -269,8 +250,6 @@ function rectaMC(conPuntos)
 %     grafico: los puntos (x,y) y la recta 
     v={x,y,x1,y1};
     graficar(conPuntos,v);
-  
-  setappdata(0,'evalue',b);
 end
 function aproximar(valor,conPuntos)
     switch valor

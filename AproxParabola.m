@@ -1,4 +1,4 @@
-function [a, b, c] = AproxParabola(datos)
+function [a, b, c] = AproxParabola(datos, cantDecimales)
     % Parabola: y = a(x^2) + bx + c
     mat=transpose(datos);
     n=length(mat);
@@ -21,9 +21,12 @@ function [a, b, c] = AproxParabola(datos)
     sumX2Y = sum(X2Y)
     A=[sumx4, sumx3, sumx2; sumx3, sumx2,sumx; sumx2,sumx,n];
     C=[sumX2Y;sumXY;sumy];
-    b=mldivide(A,C);
-    a = b(1);
-    c = b(3);
-    b = b(2);
+    parametros=mldivide(A,C);
+    a = parametros(1);
+    b = parametros(2);
+    c = parametros(3);
+    a = RedondearNumero(a, cantDecimales);
+    b = RedondearNumero(b, cantDecimales);
+    c = RedondearNumero(c, cantDecimales);
 end
 

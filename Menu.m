@@ -93,7 +93,8 @@ function Comparar_Callback(hObject, eventdata, handles)
 % hObject    handle to Comparar (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-Comparar
+global cantDecimales;
+Comparar(cantDecimales)
 
 % --- Executes on button press in finalizar.
 function finalizar_Callback(hObject, eventdata, handles)
@@ -173,6 +174,6 @@ aprox=get(handles.ListaAproximaciones,'Value');
 funcionAprox=get(handles.checkMostrarFunc,'Value');
 detalleCalculo=get(handles.checkDetalleCalc,'Value');
 visualizar=get(handles.checkVisualizar,'Value');
-cantDecimales=getappdata(0,'evalue');
+global cantDecimales;
 
 Mostrar(funcionAprox,detalleCalculo,visualizar,aprox,cantDecimales);

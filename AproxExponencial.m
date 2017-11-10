@@ -1,4 +1,4 @@
-function [a, b] = AproxExponencial(datos)
+function [a, b] = AproxExponencial(datos, cantDecimales)
     % Exponencial: y = b(e^(ax))
     mat=transpose(datos);
     n=length(mat);
@@ -16,8 +16,10 @@ function [a, b] = AproxExponencial(datos)
     sumX2 =  sum(x2);
     A=[sumX2, sumx; sumx,n ];
     C=[sumXY; sumLnY];
-    b=mldivide(A,C);
-    a = b(1);
-    b = exp(b(2));
+    parametros=mldivide(A,C);
+    a = parametros(1);
+    b = exp(parametros(2));
+    a = RedondearNumero(a, cantDecimales);
+    b = RedondearNumero(b, cantDecimales);
 end
 

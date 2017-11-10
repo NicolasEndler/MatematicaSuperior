@@ -42,6 +42,8 @@ if nargout
 else
     gui_mainfcn(gui_State, varargin{:});
 end
+global cantDecimales;
+cantDecimales = varargin{1};
 % End initialization code - DO NOT EDIT
 
 
@@ -72,14 +74,6 @@ function varargout = Comparar_OutputFcn(hObject, eventdata, handles)
 
 % Get default command line output from handles structure
 varargout{1} = handles.output;
-
-
-% --- Executes on button press in Volver.
-function Volver_Callback(hObject, eventdata, handles)
-% hObject    handle to Volver (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-close Comparar
 
 % --- Executes on button press in BotonComprar.
 function BotonComprar_Callback(hObject, eventdata, handles)
@@ -130,13 +124,17 @@ function datos = AgregarColumna(condicion, datosAnteriores, nuevaColumna)
     end
     
 function valores = getValores(matriz, a, b, c, expresion)
+    global cantDecimales;
     n=size(matriz, 1);
     for i=1:n
         x = matriz(i, 1);
         valores(i, 1) = eval(expresion);
     end
+    valores = RedondearVector(valores, cantDecimales);
+    valores = transpose(valores);
     
 function [valores, errorTotal] = getErrores(matriz, valoresAproximados)
+    global cantDecimales;
     n=size(matriz, 1);
     errorTotal = 0;
     for i=1:n
@@ -144,28 +142,33 @@ function [valores, errorTotal] = getErrores(matriz, valoresAproximados)
         errorTotal = errorTotal + errorCuadratico;
         valores(i, 1) = errorCuadratico;
     end
+    valores = RedondearVector(valores, cantDecimales);
+    valores = transpose(valores);
 
 function [datos, mejorAproximacion] = getDatos(recta, parabola, exponencial, potencial, hiperbola)
+global cantDecimales;
 global const matriz;
 datos = matriz;
+datos(1:1, :) = RedondearVector(datos(1:1, :), cantDecimales);
+datos(2:2, :) = RedondearVector(datos(2:2, :), cantDecimales);
 
-[a, b, c] = getParametrosRecta;
+[a, b, c] = getParametrosRecta(cantDecimales);
 valoresRecta = getValores(matriz, a, b, c, 'a*x+b');
 datos = AgregarColumna(recta,datos,valoresRecta);
 
-[a, b, c] = getParametrosParabola;
+[a, b, c] = getParametrosParabola(cantDecimales);
 valoresParabola = getValores(matriz, a, b, c, 'a*x^2 + b*x + c');
 datos = AgregarColumna(parabola,datos,valoresParabola);
 
-[a, b, c] = getParametrosExponencial;
+[a, b, c] = getParametrosExponencial(cantDecimales);
 valoresExponencial = getValores(matriz, a, b, c, 'b * exp(a*x)');
 datos = AgregarColumna(exponencial,datos,valoresExponencial);
 
-[a, b, c] = getParametrosPotencial;
+[a, b, c] = getParametrosPotencial(cantDecimales);
 valoresPotencial = getValores(matriz, a, b, c, 'b * (x^a)');
 datos = AgregarColumna(potencial,datos,valoresPotencial);
 
-[a, b, c] = getParametrosHiperbolica;
+[a, b, c] = getParametrosHiperbolica(cantDecimales);
 valoresHiperbolica = getValores(matriz, a, b, c, 'a / (x+b)');
 datos = AgregarColumna(hiperbola,datos,valoresHiperbolica);
 
@@ -200,29 +203,29 @@ function aproximacion = getMejorAproximacion(aproximacionesUsadas, listadoErrore
     end
     
         
-function [a, b, c] = getParametrosRecta
+function [a, b, c] = getParametrosRecta(cantDecimales)
     global const matriz;
     c = 0;
-    [a, b] = AproxRecta(matriz);
+    [a, b] = AproxRecta(matriz, cantDecimales);
     
-function [a, b, c] = getParametrosParabola
+function [a, b, c] = getParametrosParabola(cantDecimales)
     global const matriz;
-    [a, b, c] = AproxParabola(matriz);
+    [a, b, c] = AproxParabola(matriz, cantDecimales);
     
-function [a, b, c] = getParametrosExponencial
+function [a, b, c] = getParametrosExponencial(cantDecimales)
     global const matriz;
     c = 0;
-    [a, b] = AproxExponencial(matriz);
+    [a, b] = AproxExponencial(matriz, cantDecimales);
 
-function [a, b, c] = getParametrosPotencial
+function [a, b, c] = getParametrosPotencial(cantDecimales)
     global const matriz;
     c = 0;
-    [a, b] = AproxPotencial(matriz);
+    [a, b] = AproxPotencial(matriz, cantDecimales);
 
-function [a, b, c] = getParametrosHiperbolica
+function [a, b, c] = getParametrosHiperbolica(cantDecimales)
     global const matriz;
     c = 0;
-    [a, b] = AproxHiperbolica(matriz);
+    [a, b] = AproxHiperbolica(matriz, cantDecimales);
     
 
  

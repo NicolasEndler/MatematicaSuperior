@@ -156,7 +156,8 @@ matriz=cell2mat(datosAnteriores(:,:));
 guidata(hObject,handles);
 cd=get(handles.cantDecimales,'String');
 cd=str2double(cd);
-setappdata(0,'evalue',cd);
+global cantDecimales;
+cantDecimales = cd;
 close MenuIngresarD;
 
 

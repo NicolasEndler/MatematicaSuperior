@@ -1,4 +1,4 @@
-function [a, b] = AproxRecta(datos)
+function [a, b] = AproxRecta(datos, cantDecimales)
     % Recta: y = ax +b
     mat=transpose(datos);
     n=length(mat);
@@ -11,8 +11,10 @@ function [a, b] = AproxRecta(datos)
     A=[sum(x.^2),sum(x);sum(x),n];
     C=[sum(x.*y);sum(y)];
 %     obtengo b de Ab=C
-    b=mldivide(A,C);
-    a = b(1);
-    b = b(2);
+    parametros=mldivide(A,C);
+    a = parametros(1);
+    b = parametros(2);
+    a = RedondearNumero(a, cantDecimales);
+    b = RedondearNumero(b, cantDecimales);
 end
 
