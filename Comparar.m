@@ -188,7 +188,6 @@ aproximacionesUsadas = [recta, parabola, exponencial, potencial, hiperbola];
 listadoErrores = [errorRecta, errorParabola, errorExponencial, errorPotencial, errorHiperbolica];
 mejorAproximacion = getMejorAproximacion(aproximacionesUsadas, listadoErrores);
 
-
 function aproximacion = getMejorAproximacion(aproximacionesUsadas, listadoErrores)
     listadoAproximaciones = {'Recta MC' 'Parabola MC' 'Aprox. Exponencial' 'Aprox. Potencial' 'Aprox. Hiperbolica'};
     aproximacion = 'Ninguna';
@@ -201,42 +200,29 @@ function aproximacion = getMejorAproximacion(aproximacionesUsadas, listadoErrore
     end
     
         
-        
-
 function [a, b, c] = getParametrosRecta
-    % Obtener la a,b de la recta (y=ax+b)
-        a = 1;
-        b = 1;
-        c = 0;
-    % Estos van de ejemplo
+    global const matriz;
+    c = 0;
+    [a, b] = AproxRecta(matriz);
     
 function [a, b, c] = getParametrosParabola
-    % Obtener la a,b,c de la parabola (y=ax^2 + bx + c)
-        a = 1;
-        b = 1;
-        c = 1;
-    % Estos van de ejemplo
+    global const matriz;
+    [a, b, c] = AproxParabola(matriz);
     
 function [a, b, c] = getParametrosExponencial
-    % Obtener la a,b,c de la exponencial (y=b * e^(ax))
-        a = 1;
-        b = 1;
-        c = 1;
-    % Estos van de ejemplo
+    global const matriz;
+    c = 0;
+    [a, b] = AproxExponencial(matriz);
 
 function [a, b, c] = getParametrosPotencial
-    % Obtener la a,b,c de la potencial [y = b(x^a)]
-        a = 1;
-        b = 1;
-        c = 1;
-    % Estos van de ejemplo
+    global const matriz;
+    c = 0;
+    [a, b] = AproxPotencial(matriz);
 
 function [a, b, c] = getParametrosHiperbolica
-    % Obtener la a,b,c de la hiperbolica [y=a/(x+b)]
-        a = 1;
-        b = 1;
-        c = 1;
-    % Estos van de ejemplo
+    global const matriz;
+    c = 0;
+    [a, b] = AproxHiperbolica(matriz);
     
 
  
