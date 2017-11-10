@@ -83,7 +83,34 @@ function mostrarAproximacion(tipo,cantDec)
 
         end
 end
-function mostrar(valor,tipo,cantDecimales)
+
+function [formula, a, b, c] = getParametrosYFormula(tipo, cantDecimales)
+    global const matriz;
+    c = 0;
+    formulas = {'a*x+b' 'a*x^2 + b*x + c' 'b * exp(a*x)' 'b * (x^a)' 'a / (x+b)'};
+    formula = formulas(tipo);
+    switch tipo
+        case 1
+            [a, b] = AproxRecta(matriz, cantDecimales);
+        case 2
+            [a, b, c] = AproxParabola(matriz, cantDecimales);
+        case 3
+            [a, b] = AproxExponencial(matriz, cantDecimales);
+        case 4
+            [a, b] = AproxPotencial(matriz, cantDecimales);
+        case 5
+            [a, b] = AproxPotencial(matriz, cantDecimales);
+    end
+end
+
+function mostrar(valor,tipo,cantDecimales, handles)
+    global const matriz;
+    datos = RedondearMatrizDatos(matriz, cantDecimales);
+    [formula, a, b, c] = getParametrosYFormula(tipo, cantDecimales);
+    valores = HallarValores(matriz, a, b, c, strjoin(formula));
+    [errores, errorTotal] = HallarErrores(matriz, valores);
+    datos = [datos, valores, errores];
+    set(handles.TablaValores, 'Data', datos);
     if(valor==1)
         mostrarAproximacion(tipo,cantDecimales);
     end
@@ -286,7 +313,7 @@ guidata(hObject, handles);
 
 detalle(varargin{2}); 
 aproximar(varargin{4},varargin{3});
-mostrar(varargin{1},varargin{4},varargin{5});
+mostrar(varargin{1},varargin{4},varargin{5}, handles);
 end
 % --- Outputs from this function are returned to the command line.
 function varargout = Mostrar_OutputFcn(hObject, eventdata, handles) 

@@ -82,10 +82,21 @@ function mostrarAproximacion(tipo,cantDec)
                 tx.FontSize=15;
 
         end
+        datos = RedondearMatrizDatos(matriz, cantDec);
+        set(handles.TablaValores, 'Data', datos);
 end
-function mostrar(valor,tipo,cantDecimales)
+
+function getParametrosYExpr
+
+function mostrar(valor,tipo,cantDecimales, handles)
+    global const matriz;
+    expresiones = {'a*x+b' 'a*x^2 + b*x + c' 'b * exp(a*x)' 'b * (x^a)' 'a / (x+b)'};
+    expresion = expresiones(tipo);
+    datos = RedondearMatrizDatos(matriz, cantDecimales);
+    valores = HallarValores(matriz, a, b, c, expresion);
+    set(handles.TablaValores, 'Data', datos);
     if(valor==1)
-        mostrarAproximacion(tipo,cantDecimales);
+        mostrarAproximacion(tipo,cantDecimales, handles);
     end
 
 end
@@ -286,7 +297,7 @@ guidata(hObject, handles);
 
 detalle(varargin{2}); 
 aproximar(varargin{4},varargin{3});
-mostrar(varargin{1},varargin{4},varargin{5});
+mostrar(varargin{1},varargin{4},varargin{5}, handles);
 end
 % --- Outputs from this function are returned to the command line.
 function varargout = Mostrar_OutputFcn(hObject, eventdata, handles) 

@@ -1,0 +1,7 @@
+function mat = RedondearMatrizDatos(matriz)
+    mat = transpose(matriz);
+    matX = RedondearVector(mat(1:1, :), cantDecimales);
+    datosRedondeadosY = RedondearVector(mat(2:2, :), cantDecimales);
+    mat = [transpose(datosRedondeadosX),transpose(datosRedondeadosY)];
+end
+

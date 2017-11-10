@@ -122,70 +122,55 @@ function datos = AgregarColumna(condicion, datosAnteriores, nuevaColumna)
         datos = [datosAnteriores, nuevaColumna];
     end
     
-function valores = getValores(matriz, a, b, c, expresion)
+function valoresRedondedados = redondearValores(valores)
     global const cantDecimales;
-    n=size(matriz, 1);
-    for i=1:n
-        x = matriz(i, 1);
-        valores(i, 1) = eval(expresion);
-    end
-    valores = RedondearVector(valores, cantDecimales);
-    valores = transpose(valores);
-    
-function [valores, errorTotal] = getErrores(matriz, valoresAproximados)
-    global const cantDecimales;
-    n=size(matriz, 1);
-    errorTotal = 0;
-    for i=1:n
-        errorCuadratico = (valoresAproximados(i, 1) - matriz(i, 2))^2;
-        errorTotal = errorTotal + errorCuadratico;
-        valores(i, 1) = errorCuadratico;
-    end
-    valores = RedondearVector(valores, cantDecimales);
-    valores = transpose(valores);
+    valoresRedondedados = RedondearVector(valores, cantDecimales);
+    valoresRedondedados = transpose(valoresRedondedados);
+
 
 function [datos, mejorAproximacion] = getDatos(recta, parabola, exponencial, potencial, hiperbola)
 global const cantDecimales;
 global const matriz;
-datos = transpose(matriz);
-
-datosRedondeadosX = RedondearVector(datos(1:1, :), cantDecimales);
-datosRedondeadosY = RedondearVector(datos(2:2, :), cantDecimales);
-datos = [transpose(datosRedondeadosX),transpose(datosRedondeadosY)];
+datos = RedondearMatrizDatos(matriz, cantDecimales);
 
 [a, b, c] = getParametrosRecta(cantDecimales);
-valoresRecta = getValores(matriz, a, b, c, 'a*x+b');
+valoresRecta = HallarValores(matriz, a, b, c, 'a*x+b');
+valoresRecta = redondearValores(valoresRecta);
 datos = AgregarColumna(recta,datos,valoresRecta);
 
 [a, b, c] = getParametrosParabola(cantDecimales);
-valoresParabola = getValores(matriz, a, b, c, 'a*x^2 + b*x + c');
+valoresParabola = HallarValores(matriz, a, b, c, 'a*x^2 + b*x + c');
+valoresParabola = redondearValores(valoresParabola);
 datos = AgregarColumna(parabola,datos,valoresParabola);
 
 [a, b, c] = getParametrosExponencial(cantDecimales);
-valoresExponencial = getValores(matriz, a, b, c, 'b * exp(a*x)');
-datos = AgregarColumna(exponencial,datos,valoresExponencial);
+valoresExponencial = HallarValores(matriz, a, b, c, 'b * exp(a*x)');
+valoresExponencial = redondearValores(valoresExponencial);
+datos = AgregarColumna(exponencial,datos, valoresExponencial);
 
 [a, b, c] = getParametrosPotencial(cantDecimales);
-valoresPotencial = getValores(matriz, a, b, c, 'b * (x^a)');
+valoresPotencial = HallarValores(matriz, a, b, c, 'b * (x^a)');
+valoresPotencial = redondearValores(valoresPotencial);
 datos = AgregarColumna(potencial,datos,valoresPotencial);
 
 [a, b, c] = getParametrosHiperbolica(cantDecimales);
-valoresHiperbolica = getValores(matriz, a, b, c, 'a / (x+b)');
+valoresHiperbolica = HallarValores(matriz, a, b, c, 'a / (x+b)');
+valoresHiperbolica = redondearValores(valoresHiperbolica);
 datos = AgregarColumna(hiperbola,datos,valoresHiperbolica);
 
-[columna, errorRecta] = getErrores(matriz, valoresRecta);
+[columna, errorRecta] = HallarErrores(matriz, valoresRecta);
 datos = AgregarColumna(recta,datos,columna);
 
-[columna, errorParabola] = getErrores(matriz, valoresParabola);
+[columna, errorParabola] = HallarErrores(matriz, valoresParabola);
 datos = AgregarColumna(parabola,datos,columna);
 
-[columna, errorExponencial] = getErrores(matriz, valoresExponencial);
+[columna, errorExponencial] = HallarErrores(matriz, valoresExponencial);
 datos = AgregarColumna(exponencial,datos,columna);
 
-[columna, errorPotencial] = getErrores(matriz, valoresPotencial);
+[columna, errorPotencial] = HallarErrores(matriz, valoresPotencial);
 datos = AgregarColumna(potencial,datos,columna);
 
-[columna, errorHiperbolica] = getErrores(matriz, valoresHiperbolica);
+[columna, errorHiperbolica] = HallarErrores(matriz, valoresHiperbolica);
 datos = AgregarColumna(hiperbola,datos,columna);
 
 aproximacionesUsadas = [recta, parabola, exponencial, potencial, hiperbola];
