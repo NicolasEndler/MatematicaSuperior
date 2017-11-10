@@ -259,15 +259,15 @@ function rectaMC(conPuntos)
 %     obtengo b de Ab=C
     b=mldivide(A,C);
 %     calculo maximo y minimo valor de los puntos ingresados para ajustar
-    maximoX=max(x);
-    minimoX=min(x);
-    x=minimoX-2:maximoX+2;
+%     maximoX=max(x);
+%     minimoX=min(x);
+%     x=minimoX-2:maximoX+2;
     y1=x*b(2)+b(1);
 %     grafico: los puntos (x,y) y la recta 
 %   plot(x,y,'*',[-u-2,v+2],polyval(b,[-u-2,v+2]),'-b');
 
 %     plot(x,y,'*',x,y1,'-b');
-    v={x,y,x1,y1};
+    v={x,y,y1};
     graficar(conPuntos,v);
   
   setappdata(0,'evalue',b);
