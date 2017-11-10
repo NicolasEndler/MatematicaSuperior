@@ -79,7 +79,7 @@ function mostrarAproximacion(tipo,cantDec)
 %                 \frac{n!}{k!(n-k)!}
                 b=getappdata(0,'evalue');
                 b = obtenerDecimales(b,cantDec);
-                pol=strcat('$','Y =','\frac{',num2str(b(1)),'}','{','X+','(',num2str(b(1)),')','}','$');
+                pol=strcat('$','Y =','\frac{',num2str(b(2)),'}','{','X+','(',num2str(b(1)),')','}','$');
                 handles = guidata(gcf);
                 tx = title(pol,'interpreter','latex');
                 tx.FontSize=15;
@@ -109,16 +109,14 @@ function graficar(conPuntos,vectorValores)
 end    
 
 function vectorDecimal = obtenerDecimales(vector, cantDecimales)
+ if(cantDecimales>0)
     valorDecimal = 10.^cantDecimales;
-    n=length(vector);
-    for i=1:n
-    val = vector(i);
-    valor = val*valorDecimal;
-    valor = floor(valor);
-    decimal = valor./valorDecimal;
-    vectorDecimal(i) = decimal;
-    end
-    
+    vectorDecimal = (floor(vector.*valorDecimal))./valorDecimal;
+ else
+%      por defecto parte entera solamente
+
+     vectorDecimal = (floor(vector));
+ end
     
 end
 function hiperbolica(conPuntos)
@@ -130,11 +128,12 @@ function hiperbolica(conPuntos)
         valx(i)=mat(1,i);
         valy(i)=mat(2,i);
         invy(i) = 1/valy(i);
-        XY(i) = valx*invy;
+%         XY(i) = valx*invy;
         x2(i)=valx(i)^2;
-    end   
+    end
+    XY = rdivide(valx,valy);
     sumx=sum(valx);
-    suminvY=sum(invY);
+    suminvY=sum(invy);
     sumXY = sum(XY);
     sumX2 =  sum(x2);
     A=[sumX2, sumx; sumx,n ];
@@ -145,8 +144,11 @@ function hiperbolica(conPuntos)
     x=minimoX-2:maximoX+2;
     valA = 1/b(1);
     valB = b(2)*valA;
-    y=valA/(x+valB);
-    plot(valx,valy,'*',x,y,'-b');
+%     y=valA/(x+valB);
+    y=rdivide(valA,(x+valB));
+    v={valx,valy,x,y};
+    graficar(conPuntos,v);
+%     plot(valx,valy,'*',x,y,'-b');
     setappdata(0,'evalue',b);
 end
 function parabolica(conPuntos)
