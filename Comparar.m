@@ -23,7 +23,7 @@ function varargout = Comparar(varargin)
 
 % Edit the above text to modify the response to help Comparar
 
-% Last Modified by GUIDE v2.5 08-Nov-2017 23:30:01
+% Last Modified by GUIDE v2.5 10-Nov-2017 01:04:24
 
 % Begin initialization code - DO NOT EDIT 
 gui_Singleton = 1;
@@ -235,3 +235,48 @@ function [a, b, c] = getParametrosHiperbolica
     
 
         
+
+
+% --- Executes on button press in RectaMC.
+function RectaMC_Callback(hObject, eventdata, handles)
+% hObject    handle to RectaMC (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of RectaMC
+
+
+% --- Executes on button press in ParabolaMC.
+function ParabolaMC_Callback(hObject, eventdata, handles)
+% hObject    handle to ParabolaMC (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of ParabolaMC
+
+
+% --- Executes on button press in Exponencial.
+function Exponencial_Callback(hObject, eventdata, handles)
+% hObject    handle to Exponencial (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of Exponencial
+
+
+% --- Executes on button press in Potencial.
+function Potencial_Callback(hObject, eventdata, handles)
+% hObject    handle to Potencial (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of Potencial
+
+
+% --- Executes on button press in Hiperbola.
+function Hiperbola_Callback(hObject, eventdata, handles)
+% hObject    handle to Hiperbola (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of Hiperbola
