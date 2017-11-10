@@ -148,9 +148,11 @@ function [valores, errorTotal] = getErrores(matriz, valoresAproximados)
 function [datos, mejorAproximacion] = getDatos(recta, parabola, exponencial, potencial, hiperbola)
 global cantDecimales;
 global const matriz;
-datos = matriz;
-datos(1:1, :) = RedondearVector(datos(1:1, :), cantDecimales);
-datos(2:2, :) = RedondearVector(datos(2:2, :), cantDecimales);
+datos = transpose(matriz);
+
+datosRedondeadosX = RedondearVector(datos(1:1, :), cantDecimales);
+datosRedondeadosY = RedondearVector(datos(2:2, :), cantDecimales);
+datos = [transpose(datosRedondeadosX),transpose(datosRedondeadosY)];
 
 [a, b, c] = getParametrosRecta(cantDecimales);
 valoresRecta = getValores(matriz, a, b, c, 'a*x+b');
