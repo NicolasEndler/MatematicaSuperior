@@ -43,7 +43,7 @@ else
 end
 % End initialization code - DO NOT EDIT
 %  funciones propias-------------------------------------------------
-
+end
 function mostrarAproximacion(tipo,cantDec)
         switch tipo
             case 1
@@ -91,17 +91,18 @@ function mostrar(valor,tipo,cantDecimales)
         mostrarAproximacion(tipo,cantDecimales);
     end
 
-
+end
 function detalle(valor)
      if(valor==1)
 %        agregar-----> funcion que muestre fdetalle de calculo
     end
 
-
+end
 function visualizar(valor)
      if(valor==1)
 %        agregar-----> funcion para visualizar distribucion de puntos
      end
+end
 function vectorDecimal = obtenerDecimales(vector, cantDecimales)
     valorDecimal = 10.^cantDecimales;
     n=length(vector);
@@ -304,7 +305,7 @@ detalle(varargin{2});
 visualizar(varargin{3});    
 aproximar(varargin{4});
 mostrar(varargin{1},varargin{4},0);
-
+end
 % --- Outputs from this function are returned to the command line.
 function varargout = Mostrar_OutputFcn(hObject, eventdata, handles) 
 % varargout  cell array for returning output args (see VARARGOUT);
@@ -315,7 +316,7 @@ function varargout = Mostrar_OutputFcn(hObject, eventdata, handles)
 % Get default command line output from handles structure
 varargout{1} = handles.output;
 
-
+end
 % --- Executes on button press in volver.
 function volver_Callback(hObject, eventdata, handles)
 % hObject    handle to volver (see GCBO)
@@ -323,3 +324,4 @@ function volver_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 close Mostrar
+end
