@@ -41,8 +41,8 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
     set(hObject,'BackgroundColor','white');
 end
 
-function pushbutton1_ButtonDownFcn(hObject, eventdata, handles)
-
+function finalizar_Callback(hObject, eventdata, handles)
+ close Menu;
 
 % --- Executes on button press in Mostrar.
 function Mostrar_Callback(hObject, eventdata, handles)
