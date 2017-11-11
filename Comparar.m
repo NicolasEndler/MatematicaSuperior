@@ -1,31 +1,5 @@
 
 function varargout = Comparar(varargin)
-% COMPARAR MATLAB code for Comparar.fig
-%      COMPARAR, by itself, creates a new COMPARAR or raises the existing
-%      singleton*.
-%
-%      H = COMPARAR returns the handle to a new COMPARAR or the handle to
-%      the existing singleton*.
-%
-%      COMPARAR('CALLBACK',hObject,eventData,handles,...) calls the local
-%      function named CALLBACK in COMPARAR.M with the given input arguments.
-%
-%      COMPARAR('Property','Value',...) creates a new COMPARAR or raises the
-%      existing singleton*.  Starting from the left, property value pairs are
-%      applied to the GUI before Comparar_OpeningFcn gets called.  An
-%      unrecognized property name or invalid value makes property application
-%      stop.  All inputs are passed to Comparar_OpeningFcn via varargin.
-%
-%      *See GUI Options on GUIDE's Tools menu.  Choose "GUI allows only one
-%      instance to run (singleton)".
-%
-% See also: GUIDE, GUIDATA, GUIHANDLES
-
-% Edit the above text to modify the response to help Comparar
-
-% Last Modified by GUIDE v2.5 10-Nov-2017 01:04:24
-
-% Begin initialization code - DO NOT EDIT 
 gui_Singleton = 1;
 gui_State = struct('gui_Name',       mfilename, ...
                    'gui_Singleton',  gui_Singleton, ...
@@ -47,38 +21,17 @@ end
 
 % --- Executes just before Comparar is made visible.
 function Comparar_OpeningFcn(hObject, eventdata, handles, varargin)
-% This function has no output args, see OutputFcn.
-% hObject    handle to figure
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-% varargin   command line arguments to Comparar (see VARARGIN)
-
-% Choose default command line output for Comparar
 handles.output = hObject;
 
 % Update handles structure
 guidata(hObject, handles);
-%cantDecimales = varargin{1};
-%set(handles.cantDecimales, 'String', cantDecimales);
-% UIWAIT makes Comparar wait for user response (see UIRESUME)
-% uiwait(handles.figure1);
-
 
 % --- Outputs from this function are returned to the command line.
 function varargout = Comparar_OutputFcn(hObject, eventdata, handles) 
-% varargout  cell array for returning output args (see VARARGOUT);
-% hObject    handle to figure
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Get default command line output from handles structure
 varargout{1} = handles.output;
 
 % --- Executes on button press in BotonComprar.
 function BotonComprar_Callback(hObject, eventdata, handles)
-% hObject    handle to BotonComprar (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
 recta=get(handles.RectaMC,'Value');
 parabola=get(handles.ParabolaMC,'Value');
 exponencial=get(handles.Exponencial,'Value');
@@ -212,60 +165,3 @@ function [a, b, c] = getParametrosHiperbolica(cantDecimales)
     global const matriz;
     c = 0;
     [a, b] = AproxHiperbolica(matriz, cantDecimales);
-    
-
- 
-
-
-    
-
-    
-    
-    
-
-        
-
-
-% --- Executes on button press in RectaMC.
-function RectaMC_Callback(hObject, eventdata, handles)
-% hObject    handle to RectaMC (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hint: get(hObject,'Value') returns toggle state of RectaMC
-
-
-% --- Executes on button press in ParabolaMC.
-function ParabolaMC_Callback(hObject, eventdata, handles)
-% hObject    handle to ParabolaMC (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hint: get(hObject,'Value') returns toggle state of ParabolaMC
-
-
-% --- Executes on button press in Exponencial.
-function Exponencial_Callback(hObject, eventdata, handles)
-% hObject    handle to Exponencial (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hint: get(hObject,'Value') returns toggle state of Exponencial
-
-
-% --- Executes on button press in Potencial.
-function Potencial_Callback(hObject, eventdata, handles)
-% hObject    handle to Potencial (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hint: get(hObject,'Value') returns toggle state of Potencial
-
-
-% --- Executes on button press in Hiperbola.
-function Hiperbola_Callback(hObject, eventdata, handles)
-% hObject    handle to Hiperbola (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hint: get(hObject,'Value') returns toggle state of Hiperbola
